@@ -4,6 +4,9 @@ const pianoKeys = document.querySelectorAll(".piano-keys .key");
 const volumeSlider = document.querySelector('.volume-slider input');
 // selecionando o seletor com a classe volume-slider que contenha um input.
 
+const keyChecked = document.querySelector('.keys-check input');
+// selecionando o seletor com a classe keys-check que contenha um input.
+
 let mappedKeys = [];
 let audio = new Audio('src/tunes/a.wav');
 
@@ -18,7 +21,6 @@ function playTune(key) {
 }
 
 pianoKeys.forEach((key) => {
-    console.log(key.dataset.key);
     // criando um evento para cada tecla que será ativado quando for clicada.
     key.addEventListener('click', () => playTune(key.dataset.key)); // dataset vai puxar no HTML os seletores que contem o atributo data-.
     mappedKeys.push(key.dataset.key); // jogando a tecla da posição na array.
@@ -33,9 +35,13 @@ document.addEventListener('keydown', (evento) => {
 });
 
 function handleVolume(evento){
-    console.log(evento.target.value);
     audio.volume = evento.target.value;
 }
 
+function hideKey(){
+    pianoKeys.forEach(key => key.classList.toggle('hide'));
+}
 
-document.addEventListener('input', handleVolume);
+
+volumeSlider.addEventListener('input', handleVolume);
+keyChecked.addEventListener('input', hideKey);
